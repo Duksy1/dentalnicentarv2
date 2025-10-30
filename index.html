@@ -7,10 +7,841 @@
     <meta name="description" content="Crnojević Dental Studio (Trnjanska cesta 37, Zagreb) nudi premium usluge estetske, restaurativne i preventivne stomatologije.">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- Varijable za boje i fontove --- */
+        :root {
+            --font-main: 'Poppins', sans-serif;
+            --bg-dark: #1a1a1a;
+            --bg-light: #252525;
+            --text-primary: #F5F5F5;
+            --text-secondary: #AAAAAA;
+            --accent-gold: #BFAA8F;
+            --accent-gold-hover: #d7c7b0;
+            --section-padding: 80px 0;
+            --container-width: 1100px;
+        }
 
-    </head>
+        /* --- Globalni Reset i Osnovni Stilovi --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden; /* Sprječava horizontalni skrol */
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        section {
+            padding: var(--section-padding);
+            overflow: hidden; /* Sadrži animacije */
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            color: var(--accent-gold);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent-gold-hover);
+        }
+
+        /* --- Tipografija --- */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            text-align: center;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 50px auto;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        h1 { font-size: 3.5rem; font-weight: 700; }
+        h2 { font-size: 2.5rem; }
+        h3 { font-size: 1.5rem; color: var(--accent-gold); }
+        p { color: var(--text-secondary); margin-bottom: 15px; }
+
+
+        /* --- Gumbi (Buttons) --- */
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-gold);
+            color: #1a1a1a;
+            border-color: var(--accent-gold);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-gold-hover);
+            border-color: var(--accent-gold-hover);
+            color: #1a1a1a;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(191, 170, 143, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent-gold);
+            border-color: var(--accent-gold);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--accent-gold);
+            color: #1a1a1a;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(191, 170, 143, 0.2);
+        }
+        
+        /* --- Header & Navigacija --- */
+        header {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background: rgba(26, 26, 26, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #333;
+        }
+
+        .navbar {
+            height: 80px;
+        }
+
+        .navbar .container {
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo-image {
+            height: 50px; /* Prilagodite po potrebi */
+            filter: brightness(0) invert(1); /* Čini logo bijelim da se vidi na tamnoj pozadini */
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 1rem;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta-button {
+            display: block; /* Prikaz na desktopu */
+        }
+        
+        .hamburger {
+            display: none; /* Sakriven na desktopu */
+            cursor: pointer;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: var(--text-primary);
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* --- Hero Sekcija --- */
+        .hero {
+            height: 100vh;
+            min-height: 700px;
+            background: var(--bg-dark); /* Može se dodati i slika u pozadini */
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            text-align: center;
+        }
+
+        .hero-text h1 {
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .hero-cta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* --- Trust Banner (Najdoktor) --- */
+        .trust-banner-section {
+            background-color: var(--bg-light);
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .trust-title {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+        
+        .logo-scroller {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            mask-image: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+        }
+        
+        .scroller-track {
+            display: flex;
+            width: fit-content;
+            animation: scroll 40s linear infinite;
+        }
+
+        .logo-item {
+            padding: 0 30px;
+            flex-shrink: 0;
+        }
+
+        .logo-item img {
+            height: 60px;
+            filter: grayscale(100%) opacity(0.6);
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- Statistika Sekcija --- */
+        .stats-section {
+            background-color: var(--bg-dark);
+            padding: 60px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            display: block;
+        }
+
+        .stat-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        /* --- Usluge Sekcija --- */
+        
+        /* === NOVI CSS GRID RASPORED === */
+        .usluge-grid {
+            display: grid;
+            /* DEFAULT: 6-column grid za desktop */
+            grid-template-columns: repeat(6, 1fr);
+            gap: 30px;
+        }
+        
+        /* DESKTOP: Prve dvije kartice uzimaju po pola širine (3/6 stupca) */
+        .usluge-grid .usluga-card:nth-child(1),
+        .usluge-grid .usluga-card:nth-child(2) {
+            grid-column: span 3;
+        }
+
+        /* DESKTOP: Ostale kartice uzimaju po 1/3 širine (2/6 stupca) */
+        .usluge-grid .usluga-card:nth-child(n+3) {
+            grid-column: span 2;
+        }
+        
+        /* === DODATAK ZA ISTICANJE PRVE DVIJE USLUGE (ostaje isti) === */
+        .usluge-grid .usluga-card:nth-child(1),
+        .usluge-grid .usluga-card:nth-child(2) {
+            border-color: var(--accent-gold);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transform: translateY(-8px); /* Čini ih "podignutima" */
+        }
+        /* === KRAJ PROMJENA === */
+
+
+        .usluga-card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .usluga-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-gold);
+        }
+        
+        /* Osigurava da istaknute kartice ne dobiju dupli hover efekt */
+        .usluge-grid .usluga-card:nth-child(1):hover,
+        .usluge-grid .usluga-card:nth-child(2):hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .usluga-card-image img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        
+        .usluga-card-content {
+            padding: 25px;
+        }
+
+        .usluga-card-content h3 {
+            margin-bottom: 10px;
+            color: var(--accent-gold); /* Naslov kartice u zlatnoj boji */
+        }
+        
+        .btn-saznaj-vise {
+            display: inline-block;
+            margin-top: 15px;
+            font-weight: 500;
+            color: var(--accent-gold);
+            position: relative;
+        }
+        
+        .btn-saznaj-vise::after {
+            content: '→';
+            margin-left: 8px;
+            transition: margin-left 0.3s ease;
+        }
+        
+        .btn-saznaj-vise:hover::after {
+            margin-left: 12px;
+        }
+        
+        /* Sakriveni linkovi na karticama koje ih nemaju */
+        .usluga-card:not(:nth-child(1)):not(:nth-child(2)) .btn-saznaj-vise {
+            display: none;
+        }
+
+        /* --- Video Sekcija --- */
+        .video-section {
+            background-color: var(--bg-light);
+        }
+        
+        .video-wrapper {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            display: block;
+        }
+
+        /* --- O Nama Sekcija --- */
+        .o-nama-flex {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .o-nama-image {
+            flex-basis: 45%;
+        }
+
+        .o-nama-image img {
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .o-nama-text {
+            flex-basis: 55%;
+        }
+
+        .o-nama-text .section-title {
+            text-align: left;
+        }
+        
+        .o-nama-text h3 {
+            margin-bottom: 20px;
+            font-size: 1.7rem;
+        }
+        
+        .o-nama-text .btn {
+            margin-top: 20px;
+        }
+        
+        /* --- Recenzije Sekcija --- */
+        .google-rating-summary {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            margin: 0 auto 50px auto;
+            border: 1px solid #333;
+        }
+        
+        .rating-box {
+            text-align: center;
+        }
+        
+        .rating-score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-right: 15px;
+        }
+        
+        .rating-stars {
+            display: inline-block;
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+        }
+        
+        .review-count {
+            display: block;
+            margin-top: 10px;
+            color: var(--text-secondary);
+        }
+        
+        .google-reviews-btn {
+            background: #fff;
+            color: #1a1a1a;
+            border: none;
+        }
+        
+        .google-reviews-btn:hover {
+            background: #eee;
+            color: #1a1a1a;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .recenzije-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .recenzija-card {
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .recenzija-card p {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .recenzija-autor {
+            text-align: left;
+        }
+        
+        .recenzija-autor strong {
+            color: var(--text-primary);
+        }
+
+        .zvijezde {
+            color: var(--accent-gold);
+            margin-top: 5px;
+        }
+        
+        /* --- Kontakt Sekcija --- */
+        .kontakt-section {
+            background-color: var(--bg-light);
+        }
+        
+        .kontakt-flex {
+            display: flex;
+            gap: 50px;
+        }
+        
+        .kontakt-forma-wrap,
+        .kontakt-info-wrap {
+            flex-basis: 50%;
+        }
+        
+        /* Kontakt Forma */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            font-size: 1rem;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 2px rgba(191, 170, 143, 0.3);
+        }
+        
+        textarea {
+            resize: vertical;
+        }
+        
+        /* Kontakt Info */
+        .kontakt-info-wrap h3 {
+            color: var(--accent-gold);
+            font-size: 1.7rem;
+            margin-bottom: 25px;
+        }
+        
+        .info-stavka {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+        
+        .info-stavka i {
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            padding-top: 5px;
+        }
+        
+        .info-stavka strong {
+            display: block;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+        }
+        
+        .info-stavka p,
+        .info-stavka p a {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        .mapa-wrap {
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 30px;
+            border: 1px solid #444;
+            height: 300px;
+        }
+        
+        .mapa-wrap iframe {
+            filter: invert(90%) grayscale(60%);
+            height: 100%;
+            width: 100%;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--bg-dark);
+            border-top: 1px solid #333;
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* --- Plutajući gumb za poziv --- */
+        .floating-call-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: var(--accent-gold);
+            color: #1a1a1a;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(191, 170, 143, 0.4);
+            z-index: 998;
+            transition: all 0.3s ease;
+        }
+        
+        .floating-call-btn span {
+            display: none; /* Sakriveno, pojavljuje se na hover */
+        }
+        
+        .floating-call-btn:hover {
+            width: auto;
+            padding: 0 25px;
+            color: #1a1a1a;
+        }
+        
+        .floating-call-btn:hover i {
+            margin-right: 10px;
+        }
+        
+        .floating-call-btn:hover span {
+            display: inline;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        /* ========================================
+        ANIMACIJE NA SKROL
+        ========================================
+        */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.6s ease-out;
+        }
+        
+        .reveal.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========================================
+        RESPONZIVNI DIZAJN (MOBILE)
+        ========================================
+        */
+        
+        @media (max-width: 992px) {
+            .usluge-grid {
+                /* TABLET: Vraća se na 2 stupca */
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            /* TABLET: Resetiraj sve spanove da se normalno uklope u 2 stupca */
+            .usluge-grid .usluga-card:nth-child(1),
+            .usluge-grid .usluga-card:nth-child(2),
+            .usluge-grid .usluga-card:nth-child(n+3) {
+                grid-column: span 1;
+            }
+
+            /* Na tabletu, neka istaknute kartice ostanu istaknute */
+            .usluge-grid .usluga-card:nth-child(1),
+            .usluge-grid .usluga-card:nth-child(2) {
+                 transform: translateY(-8px);
+            }
+            
+            .o-nama-flex {
+                flex-direction: column;
+            }
+            
+            .o-nama-text .section-title {
+                text-align: center;
+                margin-top: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            :root {
+                --section-padding: 60px 0;
+            }
+            
+            h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
+
+            /* --- Mobilna Navigacija --- */
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 80px; /* Ispod headera */
+                flex-direction: column;
+                background-color: var(--bg-dark);
+                width: 100%;
+                height: calc(100vh - 80px);
+                text-align: center;
+                transition: left 0.3s ease;
+                gap: 0;
+            }
+            
+            .nav-item {
+                width: 100%;
+            }
+            
+            .nav-link {
+                display: block;
+                padding: 20px;
+                border-bottom: 1px solid #333;
+            }
+            
+            .nav-link:hover::after {
+                width: 0; /* Isključi donju crtu na mobitelu */
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+            
+            /* Animacija hamburgera u 'X' */
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+            
+            .nav-cta-button {
+                display: none; /* Sakrij gumb u navigaciji, vidi se u hero */
+            }
+
+            /* --- Ostale sekcije --- */
+            .stats-grid,
+            .recenzije-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .usluge-grid {
+                /* MOBILE: Vraća se na 1 stupac */
+                grid-template-columns: 1fr;
+            }
+
+            /* MOBILE: Resetiraj sve spanove da se normalno uklope u 1 stupac */
+            .usluge-grid .usluga-card:nth-child(1),
+            .usluge-grid .usluga-card:nth-child(2),
+            .usluge-grid .usluga-card:nth-child(n+3) {
+                grid-column: span 1;
+            }
+            
+            /* Na mobitelu poništi isticanje da sve kartice budu jednake */
+            .usluge-grid .usluga-card:nth-child(1),
+            .usluge-grid .usluga-card:nth-child(2) {
+                 transform: translateY(0); /* Poništi "podizanje" na mobitelu */
+                 /* Zlatni obrub ostaje, što je OK */
+            }
+            
+            .kontakt-flex {
+                flex-direction: column;
+            }
+            
+            .floating-call-btn:hover span,
+            .floating-call-btn:hover i {
+                display: inline;
+                margin: 0;
+            }
+            .floating-call-btn:hover {
+                width: 60px;
+                padding: 0;
+            }
+            .floating-call-btn span { display: none; }
+        }
+
+    </style>
+</head>
 <body>
 
     <header>
@@ -38,10 +869,9 @@
         </nav>
     </header>
 
-    <section class="hero animate-on-scroll">
+    <section class="hero">
         <div class="container hero-content">
-            <div class="hero-text">
-                <h1>Vaš osmijeh, naša strast. Vaše povjerenje, naš uspjeh.</h1>
+            <div class="hero-text reveal"> <h1>Vaš osmijeh, naša strast. Vaše povjerenje, naš uspjeh.</h1>
                 <p class="hero-subtitle">Crnojević Dental Studio - 42 godine iskustva i više od 5 000 zadovoljnih pacijenata.</p>
                 <div class="hero-cta">
                     <a href="#kontakt-forma" class="btn btn-primary">Zakažite konzultacije</a>
@@ -53,7 +883,7 @@
 
     <section id="trust-banner" class="trust-banner-section">
         <div class="container">
-            <h4 class="trust-title">Ponosni dobitnici Najdoktor priznanja iz godine u godinu</h4>
+            <h4 class="trust-title reveal">Ponosni dobitnici Najdoktor priznanja iz godine u godinu</h4>
             
             <div class="logo-scroller" data-speed="slow">
                 <div class="scroller-track">
@@ -80,15 +910,16 @@
             </div>
         </div>
     </section>
+    
     <section id="statistika" class="stats-section">
         <div class="container stats-grid">
             
-            <div class="stat-item">
+            <div class="stat-item reveal">
                 <span class="stat-number" data-target="40">0+</span> 
                 <span class="stat-description">Godina Iskustva</span>
             </div>
             
-            <div class="stat-item">
+            <div class="stat-item reveal">
                 <span class="stat-number" data-target="5000">0+</span> 
                 <span class="stat-description">Zadovoljnih Pacijenata</span>
             </div>
@@ -98,101 +929,101 @@
 
     <section id="usluge" class="usluge-section">
         <div class="container">
-            <h2 class="section-title">Naš Pristup Vašem Osmijehu</h2>
-            <p class="section-subtitle">Pružamo kompletna stomatološka rješenja, od dijagnostike do finalnog osmijeha, koristeći najmoderniju tehnologiju.</p>
+            <h2 class="section-title reveal">Naš Pristup Vašem Osmijehu</h2>
+            <p class="section-subtitle reveal">Pružamo kompletna stomatološka rješenja, od dijagnostike do finalnog osmijeha, koristeći najmoderniju tehnologiju.</p>
             
             <div class="usluge-grid">
             
-            <div class="usluga-card" tabindex="0">
-                <div class="usluga-card-image">
-                    <img src="/images/Funkcijska dijagnostika.jpg" alt="Funkcijska dijagnostika Crnojević Dental Studio">
+                <div class="usluga-card reveal" tabindex="0">
+                    <div class="usluga-card-image">
+                        <img src="/images/Funkcijska dijagnostika.jpg" alt="Funkcijska dijagnostika Crnojević Dental Studio">
+                    </div>
+                    <div class="usluga-card-content">
+                        <h3>Funkcijska Dijagnostika</h3>
+                        <p>Analiza zagriza i funkcije čeljusti za rješavanje kompleksnih problema.</p>
+                        <a href="funkcijska-dijagnostika.html" class="btn-saznaj-vise">Saznaj više</a> 
+                    </div>
                 </div>
-                <div class="usluga-card-content">
-                    <h3>Funkcijska Dijagnostika</h3>
-                    <p>Analiza zagriza i funkcije čeljusti za rješavanje kompleksnih problema.</p>
-                    <a href="funkcijska-dijagnostika.html" class="btn btn-saznaj-vise">Saznaj više</a> 
-                </div>
-            </div>
 
-            <div class="usluga-card" tabindex="0">
-                <div class="usluga-card-image">
-                    <img src="/images/Paradontološka terapija.jpg" alt="Parodontologija Crnojević Dental Studio">
+                <div class="usluga-card reveal" tabindex="0">
+                    <div class="usluga-card-image">
+                        <img src="/images/Paradontološka terapija.jpg" alt="Parodontologija Crnojević Dental Studio">
+                    </div>
+                    <div class="usluga-card-content">
+                        <h3>Parodontologija</h3>
+                        <p>Liječenje bolesti desni i potpornih struktura zuba za dugoročno zdravlje.</p>
+                        <a href="parodontologija.html" class="btn-saznaj-vise">Saznaj više</a>
+                    </div>
                 </div>
-                <div class="usluga-card-content">
-                    <h3>Parodontologija</h3>
-                    <p>Liječenje bolesti desni i potpornih struktura zuba za dugoročno zdravlje.</p>
-                    <a href="parodontologija.html" class="btn btn-saznaj-vise">Saznaj više</a>
-                </div>
-            </div>
 
-            <div class="usluga-card" tabindex="0">
-                <div class="usluga-card-image">
-                    <img src="/images/Estetska stomatologija.jpg" alt="Estetska stomatologija Crnojević Dental Studio">
+                <div class="usluga-card reveal" tabindex="0">
+                    <div class="usluga-card-image">
+                        <img src="/images/Estetska stomatologija.jpg" alt="Estetska stomatologija Crnojević Dental Studio">
+                    </div>
+                    <div class="usluga-card-content">
+                        <h3>Estetska Stomatologija</h3>
+                        <p>Fasete, izbjeljivanje i sve za postizanje besprijekornog osmijeha.</p>
+                    </div>
                 </div>
-                <div class="usluga-card-content">
-                    <h3>Estetska Stomatologija</h3>
-                    <p>Fasete, izbjeljivanje i sve za postizanje besprijekornog osmijeha.</p>
-                </div>
-            </div>
 
-            <div class="usluga-card" tabindex="0">
-                <div class="usluga-card-image">
-                    <img src="/images/Protetika.png" alt="Zubna protetika Crnojević Dental Studio">
+                <div class="usluga-card reveal" tabindex="0">
+                    <div class="usluga-card-image">
+                        <img src="/images/Protetika.png" alt="Zubna protetika Crnojević Dental Studio">
+                    </div>
+                    <div class="usluga-card-content">
+                        <h3>Protetika</h3>
+                        <p>Krunice, mostovi i ljuskice za potpunu funkcionalnu i estetsku obnovu.</p>
+                    </div>
                 </div>
-                <div class="usluga-card-content">
-                    <h3>Protetika</h3>
-                    <p>Krunice, mostovi i ljuskice za potpunu funkcionalnu i estetsku obnovu.</p>
-                </div>
-            </div>
 
-            <div class="usluga-card" tabindex="0">
-                <div class="usluga-card-image">
-                    <img src="/images/Oralna kirurgija.jpeg" alt="Oralna kirurgija Crnojević Dental Studio">
+                <div class="usluga-card reveal" tabindex="0">
+                    <div class="usluga-card-image">
+                        <img src="/images/Oralna kirurgija.jpeg" alt="Oralna kirurgija Crnojević Dental Studio">
+                    </div>
+                    <div class="usluga-card-content">
+                        <h3>Oralna Kirurgija</h3>
+                        <p>Sigurni i bezbolni zahvati, uključujući vađenje umnjaka i implantologiju.</p>
+                    </div>
                 </div>
-                <div class="usluga-card-content">
-                    <h3>Oralna Kirurgija</h3>
-                    <p>Sigurni i bezbolni zahvati, uključujući vađenje umnjaka i implantologiju.</p>
+                
+                <div class="usluga-card reveal" tabindex="0">
+                    <div class="usluga-card-image">
+                        <img src="/images/Konzervativna terapija.jpeg" alt="Konzervativna terapija Crnojević Dental Studio">
+                    </div>
+                    <div class="usluga-card-content">
+                        <h3>Konzervativna Terapija</h3>
+                        <p>Liječenje karijesa i izrada preciznih, estetskih ispuna (plombi).</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="usluga-card" tabindex="0">
-                <div class="usluga-card-image">
-                    <img src="/images/Konzervativna terapija.jpeg" alt="Konzervativna terapija Crnojević Dental Studio">
-                </div>
-                <div class="usluga-card-content">
-                    <h3>Konzervativna Terapija</h3>
-                    <p>Liječenje karijesa i izrada preciznih, estetskih ispuna (plombi).</p>
-                </div>
-            </div>
 
-            <div class="usluga-card" tabindex="0">
-                <div class="usluga-card-image">
-                    <img src="/images/Laserska terapija.jpg" alt="Laserska terapija Crnojević Dental Studio">
+                <div class="usluga-card reveal" tabindex="0">
+                    <div class="usluga-card-image">
+                        <img src="/images/Laserska terapija.jpg" alt="Laserska terapija Crnojević Dental Studio">
+                    </div>
+                    <div class="usluga-card-content">
+                        <h3>Laserska Terapija</h3>
+                        <p>Minimalno invazivni zahvati uz pomoć lasera za brži oporavak.</p>
+                    </div>
                 </div>
-                <div class="usluga-card-content">
-                    <h3>Laserska Terapija</h3>
-                    <p>Minimalno invazivni zahvati uz pomoć lasera za brži oporavak.</p>
+                
+                <div class="usluga-card reveal" tabindex="0">
+                    <div class="usluga-card-image">
+                        <img src="/images/Osmijeh.jpeg" alt="Smile Design (Dizajn osmijeha) Crnojević Dental Studio">
+                    </div>
+                    <div class="usluga-card-content">
+                        <h3>Dizajn Osmijeha</h3>
+                        <p>Digitalno planiranje i vizualizacija vašeg novog, savršenog osmijeha.</p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="usluga-card" tabindex="0">
-                <div class="usluga-card-image">
-                    <img src="/images/Osmijeh.jpeg" alt="Smile Design (Dizajn osmijeha) Crnojević Dental Studio">
-                </div>
-                <div class="usluga-card-content">
-                    <h3>Dizajn Osmijeha</h3>
-                    <p>Digitalno planiranje i vizualizacija vašeg novog, savršenog osmijeha.</p>
-                </div>
-            </div>
-        </div>
     </section> 
 
     <section id="video-prezentacija" class="video-section">
         <div class="container">
-            <h2 class="section-title">Upoznajte Naš Studio</h2>
-            <p class="section-subtitle">Zavirite u našu modernu ordinaciju i upoznajte tim koji brine o vašem osmijehu.</p>
+            <h2 class="section-title reveal">Upoznajte Naš Studio</h2>
+            <p class="section-subtitle reveal">Zavirite u našu modernu ordinaciju i upoznajte tim koji brine o vašem osmijehu.</p>
             
-            <div class="video-wrapper"> 
+            <div class="video-wrapper reveal"> 
                 <video controls width="100%" poster="/images/Poster.jpg"> <source src="/images/6847e5d9b34eba82d459dc6d_68c9665093e2f38dd6a006ec_ordinacija 16 9-transcode.mp4" type="video/mp4">
                     Vaš preglednik ne podržava video tag.
                 </video>
@@ -202,10 +1033,10 @@
 
     <section id="o-nama" class="o-nama-section">
         <div class="container o-nama-flex">
-            <div class="o-nama-image">
+            <div class="o-nama-image reveal">
                 <img src="/images/zajednickaslika_CDK.jpeg" alt="Dr. Blaženko Crnojević, Vlasnik i glavni stomatolog Crnojević Dental Studija u Zagrebu">
             </div>
-            <div class="o-nama-text">
+            <div class="o-nama-text reveal">
                 <h2 class="section-title">Filozofija Našeg Studija</h2>
                 <h3>Dr. Blaženko Crnojević</h3>
                 <p>Vjerujemo da je zdrav osmijeh temelj samopouzdanja. Naš pristup kombinira preciznost, najnoviju tehnologiju i individualni pristup svakom pacijentu. Posvećeni smo stvaranju opuštenog okruženja gdje se osjećate ugodno i informirano.</p>
@@ -214,61 +1045,63 @@
         </div>
     </section>
 
-<section id="recenzije" class="recenzije-section">
-    <div class="container">
-        <h2 class="section-title">Iskustva Naših Pacijenata</h2>
-        
-        <div class="google-rating-summary">
-            <div class="rating-box">
-                <span class="rating-score">4.5</span>
-                <div class="rating-stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i> </div>
-                <span class="review-count">Temeljeno na 17 Google recenzija</span>
-            </div>
-            <a href="https://share.google/I1wWHiKEOzPh6xZDQ" target="_blank" rel="noopener noreferrer" class="btn btn-secondary google-reviews-btn">
-                Pogledajte sve recenzije <i class="fab fa-google" style="margin-left: 8px;"></i>
-            </a>
-        </div>
-        <p class="section-subtitle" style="margin-top: 50px;">Što kažu oni kojima smo pomogli vratiti blistav osmijeh:</p> 
-        
-        <div class="recenzije-grid">
+    <section id="recenzije" class="recenzije-section">
+        <div class="container">
+            <h2 class="section-title reveal">Iskustva Naših Pacijenata</h2>
             
-            <div class="recenzija-card">
-                <p>"Boljeg stomatologa nisam vidio...... Spasio mi je ženu samo zato šta joj je napravio sve zube koji su priješnji 'zubari' sredili. Isto tako i meni, popravio sve za šta su prijašnji rekli da se ne moze. PREPORUKA!! Svi kod Blaža!"</p>
-                <div class="recenzija-autor">
-                    <strong>- Luka Bucevic</strong>
-                    <div class="zvijezde">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <div class="google-rating-summary reveal">
+                <div class="rating-box">
+                    <span class="rating-score">4.5</span>
+                    <div class="rating-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i> </div>
+                    <span class="review-count">Temeljeno na 17 Google recenzija</span>
+                </div>
+                <a href="https://share.google/I1wWHiKEOzPh6xZDQ" target="_blank" rel="noopener noreferrer" class="btn google-reviews-btn">
+                    Pogledajte sve recenzije <i class="fab fa-google" style="margin-left: 8px;"></i>
+                </a>
+            </div>
+            <p class="section-subtitle reveal" style="margin-top: 50px;">Što kažu oni kojima smo pomogli vratiti blistav osmijeh:</p> 
+            
+            <div class="recenzije-grid">
+                
+                <div class="recenzija-card reveal">
+                    <p>"Boljeg stomatologa nisam vidio...... Spasio mi je ženu samo zato šta joj je napravio sve zube koji su priješnji 'zubari' sredili. Isto tako i meni, popravio sve za šta su prijašnji rekli da se ne moze. PREPORUKA!! Svi kod Blaža!"</p>
+                    <div class="recenzija-autor">
+                        <strong>- Luka Bucevic</strong>
+                        <div class="zvijezde">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="recenzija-card">
-                <p>"Professional. The best dental concept in central and eastern Europe. Highly recommend. Easy to find, a lot of parking space."</p>
-                <div class="recenzija-autor">
-                    <strong>- Petar Crnojevic</strong>
-                    <div class="zvijezde">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                <div class="recenzija-card reveal">
+                    <p>"Professional. The best dental concept in central and eastern Europe. Highly recommend. Easy to find, a lot of parking space."</p>
+                    <div class="recenzija-autor">
+                        <strong>- Petar Crnojevic</strong>
+                        <div class="zvijezde">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </div> </div> </section>
+            </div> 
+        </div> 
+    </section>
 
     <section id="kontakt" class="kontakt-section">
         <div class="container">
-            <h2 class="section-title">Zakažite Vaš Termin</h2>
-            <p class="section-subtitle">Prvi pregled je dio vašeg puta do novog osmijeha.
+            <h2 class="section-title reveal">Zakažite Vaš Termin</h2>
+            <p class="section-subtitle reveal">Prvi pregled je dio vašeg puta do novog osmijeha.
 Ako nastavite s terapijom, iznos pregleda uračunava se u cijenu zahvata</p>
             <div class="kontakt-flex">
                 
-                <div class="kontakt-forma-wrap">
+                <div class="kontakt-forma-wrap reveal">
                     <form id="kontakt-forma" action="https://formspree.io/f/[VAŠ_FORMSpree_ID]" method="POST">
-                        <p style="margin-bottom: 25px;">Ispunite obrazac ili nas nazovite. Javit ćemo vam se u najkraćem roku.</p>
+                        <p style="margin-bottom: 25px; color: var(--text-secondary);">Ispunite obrazac ili nas nazovite. Javit ćemo vam se u najkraćem roku.</p>
                         <div class="form-group">
                             <label for="ime">Ime i Prezime:</label>
                             <input type="text" id="ime" name="Ime i Prezime" required>
@@ -285,11 +1118,11 @@ Ako nastavite s terapijom, iznos pregleda uračunava se u cijenu zahvata</p>
                             <label for="poruka">Vaša poruka:</label>
                             <textarea id="poruka" name="Poruka" rows="6"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%; border-radius: 8px;">Pošalji upit</button>
+                        <button typeD="submit" class="btn btn-primary" style="width: 100%; border-radius: 8px;">Pošalji upit</button>
                     </form>
                 </div>
                 
-                <div class="kontakt-info-wrap">
+                <div class="kontakt-info-wrap reveal">
                     <h3>Crnojević Dental Studio</h3>
                     
                     <div class="info-stavka">
@@ -300,7 +1133,7 @@ Ako nastavite s terapijom, iznos pregleda uračunava se u cijenu zahvata</p>
                         </div>
                     </div>
                     
-                     <div class="info-stavka">
+                    <div class="info-stavka">
                         <i class="fas fa-phone-alt"></i>
                         <div>
                             <strong>Telefon</strong>
@@ -308,7 +1141,7 @@ Ako nastavite s terapijom, iznos pregleda uračunava se u cijenu zahvata</p>
                         </div>
                     </div>
                     
-                     <div class="info-stavka">
+                    <div class="info-stavka">
                         <i class="fas fa-envelope"></i>
                         <div>
                             <strong>Email</strong>
@@ -316,7 +1149,7 @@ Ako nastavite s terapijom, iznos pregleda uračunava se u cijenu zahvata</p>
                         </div>
                     </div>
                     
-                     <div class="info-stavka">
+                    <div class="info-stavka">
                         <i class="fas fa-clock"></i>
                         <div>
                             <strong>Radno Vrijeme</strong>
@@ -326,7 +1159,7 @@ Ako nastavite s terapijom, iznos pregleda uračunava se u cijenu zahvata</p>
                     
                     <div class="mapa-wrap">
                         <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1303.938931067914!2d15.981475351741185!3d45.79816164439957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4765d65edcd80375%3A0x359ae9444d21280a!2sCrnojevi%C4%87%20Dental%20Studio%20(%20CDS%20)!5e1!3m2!1shr!2shr!4v1761211878420!5m2!1shr!2shr" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2781.996593438466!2d15.975058776856087!3d45.79691071210457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4765d6f1c75c8033%3A0x1d3550e6d6d8f28!2sTrnjanska%20cesta%2037%2C%2010000%2C%20Zagreb%2C%20Croatia!5e0!3m2!1sen!2sus!4v1730350720512!5m2!1sen!2sus" 
                             width="100%" 
                             height="300" 
                             style="border:0;" 
@@ -346,13 +1179,101 @@ Ako nastavite s terapijom, iznos pregleda uračunava se u cijenu zahvata</p>
         </div>
     </footer>
 
-    <a href="tel:+3851234567" class="floating-call-btn">
+    <a href="tel:+3851234567" class="floating-call-btn" aria-label="Nazovite nas za hitne slučajeve">
         <i class="fas fa-phone-alt"></i>
         <span>Nazovite nas</span>
     </a>
 
-    <script src="script.js" defer></script> 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
 
+            /* --- Logika za Hamburger Izbornik (Mobile) --- */
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            // Zatvori izbornik kada se klikne na link (na mobitelu)
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navMenu.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                    }
+                });
+            });
+
+            /* --- Logika za Animacije na Skrol (Intersection Observer) --- */
+            const revealElements = document.querySelectorAll('.reveal');
+
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                        // Opcionalno: prestani promatrati nakon što se animacija dogodi
+                        // revealObserver.unobserve(entry.target);
+                    }
+                    // Opcionalno: za ponovnu animaciju svaki put
+                    // else {
+                    //    entry.target.classList.remove('show');
+                    // }
+                });
+            }, {
+                threshold: 0.1 // Aktivira se kad je 10% elementa vidljivo
+            });
+
+            revealElements.forEach(el => {
+                revealObserver.observe(el);
+            });
+
+
+            /* --- Logika za Animirani Brojač Statistike --- */
+            const statsSection = document.querySelector('#statistika');
+            const counters = document.querySelectorAll('.stat-number');
+            let animationStarted = false;
+
+            const updateCount = (counter) => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText.replace('+', '');
+                const speed = 200; // Što veći broj, sporija animacija
+                
+                const increment = target / speed;
+
+                if (count < target) {
+                    counter.innerText = `${Math.ceil(count + increment)}+`;
+                    setTimeout(() => updateCount(counter), 15);
+                } else {
+                    counter.innerText = `${target}+`;
+                }
+            };
+            
+            const statsObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    // Pokreni animaciju samo ako je vidljiva i ako već nije pokrenuta
+                    if (entry.isIntersecting && !animationStarted) {
+                        animationStarted = true; // Osigurava da se pokrene samo jednom
+                        counters.forEach(counter => {
+                            counter.innerText = '0+'; // Resetiraj na 0
+                            updateCount(counter);
+                        });
+                        observer.unobserve(entry.target); // Prestani promatrati
+                    }
+                });
+            }, {
+                threshold: 0.5 // Aktivira se kad je 50% sekcije vidljivo
+            });
+
+            // Promatraj sekciju statistike
+            if (statsSection) {
+                statsObserver.observe(statsSection);
+            }
+
+        });
+    </script>
 </body>
 </html>
 
